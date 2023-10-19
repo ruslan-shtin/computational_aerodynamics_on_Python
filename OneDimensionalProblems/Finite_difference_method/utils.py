@@ -100,7 +100,7 @@ def main_runner(task_params, mesh, Cu, total_time, time_step_method, space_deriv
             break
 
         U_curr = U_new.copy()
-        dt = get_dt(_t, total_time, Cu, U_curr)
+        dt = get_dt(_t, total_time, mesh, Cu, U_curr)
         U_new = get_next(U_curr, _t, mesh, dt, right_function_for_dUdt_problem)
         time_steps.append(dt)
         _t += dt
