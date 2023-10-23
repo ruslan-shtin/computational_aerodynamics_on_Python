@@ -23,11 +23,16 @@ def backward(U, mesh):
     dUdx[1::1] = (U[1::1] - U[:-1:1]) / mesh.dx
     return dUdx
 
+def upwind2(U, mesh):
+    """ Upwind 2-го порядка """
+    dUdx = np.zeros_like(U)
+    dUdx[2:] = (U[:-2] - 4 * U[1: -1] + 3 * U[2:]) / (2 * mesh.dx)
+    return dUdx
 
 dUdx_function_base = {
     "Forward" : forward,
     "Backward" : backward,
-    "Upwind2" : None,
+    "Upwind2" : upwind2,
     "Upwind3" : None,
     "Upwind5" : None,
     "CD2" : None,
