@@ -106,3 +106,47 @@ def main_runner(task_params, mesh, Cu, total_time, time_step_method, space_deriv
         _t += dt
     
     return U_new, time_steps
+
+
+def get_error(U_numerical, U_analitical, mesh):
+    """ Вычисление ошибки численного решения.
+
+        Используется L2-норма.
+
+        Вход:
+            U_numerical : np.array[float]
+                Численное решение, полученное методом конечных разностей
+            U_analitical : np.array[float]
+                Аналитическое решение
+            mesh: Mesh
+                Сетка, на которой производились вычисления
+        
+        Выход:
+            norm : float
+                Вычисленная ошибка по L2-норме.
+    """
+    difs = U_analitical - U_numerical
+    difs2 = difs**2
+    difs2_dx = difs2 * mesh.dx
+    summ_difs2dx = np.sum(difs2_dx)
+    norm = np.sqrt(summ_difs2dx)
+    return norm
+
+
+def grid_conv_by_true(err1, err0):
+    """ Вычисление порядка сходимости, по двум вложенным
+        сеткам и аналитическому решению
+
+        Вход:
+            err1 : float
+                норма разности численного решения и аналитеского на сетке mesh1
+            err0 : float
+                норма разности численного решения и аналитеского на сетке mesh0
+
+        Выход:
+            ord_conv : float
+                порядок сходимости.
+    """
+    k = err1 / err0
+    ord_conv = np.log2(k)
+    return ord_conv
