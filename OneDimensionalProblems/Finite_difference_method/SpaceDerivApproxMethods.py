@@ -41,7 +41,7 @@ def get_linear_approximation_for_dUdx(U, mesh, indexes, coefs_list, dx_coef):
         right_ind = finish_ind + min_ind + i 
         dUdx[start_ind : finish_ind] += coef * U[left_ind : right_ind]
 
-    dUdx /= dx_coef * mesh.dx
+    dUdx = dUdx / (dx_coef * mesh.dx)
     return dUdx
 
 
