@@ -33,6 +33,9 @@ def get_linear_approximation_for_dUdx(U, mesh, indexes, coefs_list, dx_coef):
     min_ind, max_ind = indexes
     assert (max_ind - min_ind + 1) == len(coefs_list)
     N = U.shape[0]
+
+    # далее следует самый сложный кусок во всей программе
+    # я не знаю, как сделать это более читаемым.
     start_ind = 0 - min_ind
     finish_ind = N - max_ind
     dUdx = np.zeros_like(U)
